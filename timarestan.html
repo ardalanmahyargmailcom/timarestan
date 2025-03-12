@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>تیمارستان قدس</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 400px;
+    max-width: 90%;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    background-color: #9c27b0; /* بنفش */
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.chat-box {
+    padding: 20px;
+    overflow-y: auto;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.message {
+    background-color: #e0f7fa; /* آبی روشن */
+    color: #333;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    word-wrap: break-word;
+    align-self: flex-start; /* پیام‌ها از سمت چپ شروع شوند */
+    max-width: 80%;
+}
+
+.message.sent {
+    background-color: #ffcc80; /* نارنجی روشن */
+    align-self: flex-end; /* پیام‌های ارسالی از سمت راست شروع شوند */
+}
+
+.input-area {
+    padding: 20px;
+    background-color: #fffde7; /* زرد خیلی روشن */
+    border-top: 1px solid #eee;
+    display: flex;
+}
+
+input[type="text"] {
+    flex-grow: 1;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+button {
+    background-color: #ffb300; /* زرد */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">تیمارستان قدس</div>
+    <div class="chat-box" id="chatBox">
+        </div>
+    <div class="input-area">
+        <input type="text" id="messageInput" placeholder="پیام خود را اینجا بنویسید...">
+        <button onclick="sendMessage()">ارسال</button>
+    </div>
+</div>
+
+<script>
+function sendMessage() {
+    var inputField = document.getElementById('messageInput');
+    var messageText = inputField.value;
+    if (messageText.trim() !== '') {
+        var chatBox = document.getElementById('chatBox');
+        var newMessage = document.createElement('div');
+        newMessage.classList.add('message', 'sent'); // کلاس 'sent' برای پیام های ارسالی
+        newMessage.textContent = messageText;
+        chatBox.appendChild(newMessage);
+        inputField.value = ''; // پاک کردن input بعد از ارسال
+        chatBox.scrollTop = chatBox.scrollHeight; // اسکرول به پایین برای نمایش پیام جدید
+        // در اینجا باید پیام به سرور ارسال شود (بخش backend)
+        // و پیام های دریافتی از سرور نیز به chatBox اضافه شوند
+    }
+}
+
+document.getElementById('messageInput').addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+        sendMessage();
+    }
+});
+</script>
+
+</body>
+</html>
